@@ -1,0 +1,14 @@
+{
+  "containers": [
+    {
+      "essential": true,
+      "name": "redis",
+      "image": "redis",
+      "cpu": 10,
+      "memory": 300
+    }
+  ],
+  "service": {
+    "desiredCount": 1
+  }
+}

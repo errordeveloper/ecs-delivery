@@ -1,0 +1,24 @@
+{
+  "containers": [
+    {
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 5000
+        }
+      ],
+      "name": "hit-counter",
+      "image": "errordeveloper/hit-counter",
+      "command": [
+        "python",
+        "app.py"
+      ],
+      "cpu": 10,
+      "memory": 300
+    }
+  ],
+  "service": {
+    "desiredCount": 4
+  }
+}

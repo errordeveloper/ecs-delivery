@@ -1,6 +1,5 @@
 {
-  "family": "flask-signup",
-  "containerDefinitions": [
+  "containers": [
     {
       "image": "chartotu/flask-signup",
       "name": "flask-signup",
@@ -14,5 +13,8 @@
         }
       ]
     }
-  ]
+  ],
+  "service": {
+    "desiredCount": 5
+  }
 }

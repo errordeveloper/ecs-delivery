@@ -2,13 +2,6 @@
   "containers": [
     {
       "essential": true,
-      "name": "hit-counter-dummy",
-      "image": "errordeveloper/hit-counter",
-      "cpu": 10,
-      "memory": 300
-    },
-    {
-      "essential": true,
       "portMappings": [
         {
           "hostPort": 80,

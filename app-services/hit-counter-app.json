@@ -10,10 +10,6 @@
       ],
       "name": "hit-counter",
       "image": "errordeveloper/hit-counter",
-      "command": [
-        "python",
-        "app.py"
-      ],
       "cpu": 10,
       "memory": 300
     }

@@ -11,7 +11,7 @@ service_is_missing() {
       --cluster ${cluster} \
       --services "${name}-service" \
     | jq -r '.failures[0].reason' \
-    | grep -q MISSING 
+    | grep -q MISSING
 }
 
 this_tag() {
@@ -51,6 +51,7 @@ for this in $(ls app-services/*.json) ; do
         --cluster ${cluster} \
         --service "${name}-service" \
         --task-definition "${name}-task" \
+        --deployment-configuration '{ "minimumHealthyPercent":25, "maximumPercent": 50 }' \
         --cli-input-json "$(jq -c '.service' ${this})" \
       | jq .
   fi

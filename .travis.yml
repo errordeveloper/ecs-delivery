@@ -11,6 +11,8 @@ install:
   - pip install --user awscli
 
 script:
+  - docker version
+  - docker images
   - /bin/true
 
 after_success:

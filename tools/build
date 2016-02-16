@@ -1,0 +1,11 @@
+#!/bin/bash -x
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+for app in $(ls app-code/*/Dockerfile) ; do
+  path=${PWD}/$(dirname ${app})
+  name=$(basename ${path})
+  docker build -t ${name} -f ${app} ${path}
+done

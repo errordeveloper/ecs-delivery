@@ -2,6 +2,13 @@
   "containers": [
     {
       "essential": true,
+      "name": "hit-counter",
+      "image": "errordeveloper/hit-counter",
+      "cpu": 10,
+      "memory": 300
+    },
+    {
+      "essential": true,
       "portMappings": [
         {
           "hostPort": 80,
@@ -9,7 +16,7 @@
         }
       ],
       "name": "hit-counter",
-      "image": "errordeveloper/hit-counter",
+      "image": "$this",
       "cpu": 10,
       "memory": 300
     }

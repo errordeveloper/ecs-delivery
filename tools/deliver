@@ -14,27 +14,44 @@ service_is_missing() {
     | grep -q MISSING 
 }
 
-for app in $(ls app-services/*.json) ; do
-  name=$(basename ${app} .json)
+this_tag() {
+ printf "%s:%s-%s" ${TRAVIS_REPO_SLUG} ${name} ${TRAVIS_COMMIT}
+}
+
+for this in $(ls app-code/*/Dockerfile) ; do
+  name=$(basename $(dirname ${this}))
+  docker tag ${name} $(this_tag)
+done
+
+docker push ${TRAVIS_REPO_SLUG}
+
+for this in $(ls app-services/*.json) ; do
+  name=$(basename ${this} .json)
+
+  if [ -f app-code/${name}/Dockerfile ] ; then
+    containers=$(jq -c ".containers | [(.[] | if .image == \"\$this\" then .image = \"$(this_tag)\" else . end)]" ${this})
+  else
+    containers=$(jq -c ".containers" ${this})
+  fi
 
   aws ecs register-task-definition \
       --family "${name}-task" \
-      --container-definitions "$(jq -c '.containers' ${app})" \
-    | jq .
-  
+      --container-definitions "${containers}" \
+    | jq.
+
   if service_is_missing ; then
     aws ecs create-service \
         --cluster ${cluster} \
         --service-name "${name}-service" \
         --task-definition "${name}-task" \
-        --cli-input-json "$(jq -c '.service' ${app})" \
+        --cli-input-json "$(jq -c '.service' ${this})" \
       | jq .
   else
     aws ecs update-service \
         --cluster ${cluster} \
         --service "${name}-service" \
         --task-definition "${name}-task" \
-        --cli-input-json "$(jq -c '.service' ${app})" \
+        --cli-input-json "$(jq -c '.service' ${this})" \
       | jq .
   fi
 done

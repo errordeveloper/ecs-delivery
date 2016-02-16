@@ -1,4 +1,7 @@
-sudo: false
+sudo: required
+
+services:
+  - docker
 
 env:
   global:
@@ -13,7 +16,8 @@ install:
 script:
   - docker version
   - docker images
-  - /bin/true
+  - ./tools/build
+  - docker images
 
 after_success:
   - ./tools/deliver $TARGER_ECS_CLUSTER

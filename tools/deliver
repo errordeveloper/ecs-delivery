@@ -37,7 +37,7 @@ for this in $(ls app-services/*.json) ; do
   aws ecs register-task-definition \
       --family "${name}-task" \
       --container-definitions "${containers}" \
-    | jq.
+    | jq .
 
   if service_is_missing ; then
     aws ecs create-service \

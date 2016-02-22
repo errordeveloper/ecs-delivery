@@ -15,6 +15,6 @@
     }
   ],
   "service": {
-    "desiredCount": 0
+    "desiredCount": 3
   }
 }

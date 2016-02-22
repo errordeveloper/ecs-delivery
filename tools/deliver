@@ -51,7 +51,7 @@ for this in $(ls app-services/*.json) ; do
         --cluster ${cluster} \
         --service "${name}-service" \
         --task-definition "${name}-task" \
-        --deployment-configuration '{ "minimumHealthyPercent":25, "maximumPercent": 50 }' \
+        --deployment-configuration '{ "minimumHealthyPercent":25, "maximumPercent":100 }' \
         --cli-input-json "$(jq -c '.service' ${this})" \
       | jq .
   fi

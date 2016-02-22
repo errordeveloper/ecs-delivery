@@ -23,6 +23,7 @@ after_success:
   - docker login --email="$DOCKER_EMAIL" --username="$DOCKER_USERNAME" --password="$DOCKER_PASSWORD"
 
 deploy:
+  skip_cleanup: true
   provider: script
   script: ./tools/deliver
   on:

@@ -18,13 +18,6 @@ this_tag() {
  printf "%s:%s-%s" ${TRAVIS_REPO_SLUG} ${name} ${TRAVIS_COMMIT}
 }
 
-for this in $(ls app-code/*/Dockerfile) ; do
-  name=$(basename $(dirname ${this}))
-  docker tag ${name} $(this_tag)
-done
-
-docker push ${TRAVIS_REPO_SLUG}
-
 for this in $(ls app-services/*.json) ; do
   name=$(basename ${this} .json)
 

@@ -19,12 +19,15 @@ script:
   - ./tools/build
   - docker images
 
-after_success:
-  - docker login --email="$DOCKER_EMAIL" --username="$DOCKER_USERNAME" --password="$DOCKER_PASSWORD"
-
 deploy:
+  edge:
+      source: errordeveloper/dpl
   skip_cleanup: true
-  provider: script
-  script: ./tools/deliver
+  provider: dockerregistry
+  email: $DOCKER_EMAIL
+  username: $DOCKER_USERNAME
+  password: $DOCKER_PASSWORD
+  images:
+    - $TRAVIS_REPO_SLUG
   on:
-    branch: master
+    branch: dpl-dockerhub

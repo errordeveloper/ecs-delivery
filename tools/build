@@ -4,8 +4,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-for app in $(ls app-code/*/Dockerfile) ; do
-  path=${PWD}/$(dirname ${app})
+this_tag() {
+ printf "%s:%s-%s" ${TRAVIS_REPO_SLUG} ${name} ${TRAVIS_COMMIT}
+}
+
+for this in $(ls app-code/*/Dockerfile) ; do
+  path=${PWD}/$(dirname ${this})
   name=$(basename ${path})
-  docker build -t ${name} -f ${app} ${path}
+  docker build -t $(this_tag) -f ${this} ${path}
 done
